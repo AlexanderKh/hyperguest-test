@@ -1,0 +1,20 @@
+The reason there are wrong numbers in the result is a Database implementation.
+In usual databases there are transactions that can be used to disallow simultaneous editing of the same product.
+Here multiple workers try to write to same product, and it's value gets messed up.
+
+I implemented simple locking solution in Queue that tracks product ids that are currently processing and
+ doesn't give away messages that are related to them until first one is completed.
+
+It's also possible to implement it using separate queue per product id. This might be more performant, and also it will not lock the queue if all 50 items are related to same product.
+
+I'm not yet sure why do I need workerId in queue. Maybe I missed something.
+
+Regarding other problems with the code:
+1. In Worker class at line 17 we are exiting the cycle, what we should do probably is wait for a few second and then try again.
+Because right now if there are no messages in queue all workers will exit.
+
+2. Right now there is no error handling, nor in queue, nor in worker
+
+3. As I mentioned, it might be better to implement locking in database level
+
+4. I had to set up TS myself and add package.json and .gitignore. Makes sense to pre-set up this so candidates won't waste time.
