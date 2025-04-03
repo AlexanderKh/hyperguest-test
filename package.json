@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "name": "senior-be-developer-task",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {},
+  "scripts": {
+    "start": "tsc && node dist/main.js"
+  }
+}
